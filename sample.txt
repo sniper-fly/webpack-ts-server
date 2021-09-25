@@ -1,0 +1,3871 @@
+﻿■■「TypeScriptハンズオン」サンプルコード
+■1章
+----------------------------------------
+▼リスト1-1
+console.log("Welcome to Typescript!")
+
+
+
+
+▼リスト1-2
+console.log("Welcome to TypeScript!");
+
+
+
+
+▼リスト1-3
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="sample.js"></script>
+</head>
+<body>
+  <h1 class="bg-primary text-white p-2">Sample page</h1>
+  <div class="container py-2">
+    <p class="h5" id="target">wait...</p>
+  </div>
+</body>
+</html>
+
+
+
+
+▼リスト1-4
+window.addEventListener('load',(event)=> {
+  let p = document.querySelector('#target')
+  p.textContent = "This is message by TypeScript."
+})
+
+
+
+
+▼リスト1-5
+window.addEventListener('load', function (event) {
+    var p = document.querySelector('#target');
+    p.textContent = "This is message by TypeScript.";
+});
+
+
+
+
+▼リスト1-6
+{
+  "name": "typescript_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "……作者名（設定がなければ空のまま）……",
+  "license": "ISC"
+}
+
+
+
+
+▼リスト1-7
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
+
+
+
+
+▼リスト1-8
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+
+const isProduction = process.env.NODE_ENV == "production";
+
+
+const config = {
+  entry: "./src/index.ts", // エントリーファイル
+  output: {
+    path: path.resolve(__dirname, "dist"), // 出力先
+  },
+  devServer: { // 開発サーバーの設定
+    open: true,
+    host: "localhost",
+  },
+  plugins: [ // プラグインの設定
+    new HtmlWebpackPlugin({
+      template: "index.html",
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/i,
+        loader: "ts-loader",
+        exclude: ["/node_modules/"],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        type: "asset",
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+};
+
+
+module.exports = () => {
+  if (isProduction) {
+    config.mode = "production";
+  } else {
+    config.mode = "development";
+  }
+  return config;
+};
+
+
+
+
+■2章
+----------------------------------------
+▼リスト2-1
+const anExampleVariable = "Hello World"
+console.log(anExampleVariable)
+
+
+
+
+▼リスト2-2
+let x:number
+x = 123
+console.log(x)
+x = "ok"
+console.log(x)
+
+
+
+
+▼リスト2-3
+let x //☆
+x = 123
+console.log(x)
+x = "ok"
+console.log(x)
+
+
+
+
+▼リスト2-4
+let x = 123
+console.log(x)
+let y = "456"
+x = y
+console.log(x)
+
+
+
+
+▼リスト2-5
+let x = 123
+console.log(x)
+let y = "456"
+x = +y // ☆
+console.log(x)
+
+
+
+
+▼リスト2-6
+let x = 123
+console.log(x)
+let y = "456"
+x = Number(y)
+console.log(x)
+
+
+
+
+▼リスト2-7
+let price = 12500
+let withTax =price * 1.1
+let woTax = price / 1.1
+console.log("金額：" + price)
+console.log("税別の場合、税込価格は、" + withTax)
+console.log("税込の場合、本体価格は、" + woTax)
+
+
+
+
+▼リスト2-8
+const num = 12345 //☆
+const result = num % 2
+if (result == 0) {
+    console.log(num + "は、偶数です。")
+} else {
+    console.log(num + "は、奇数です。")
+}
+
+
+
+
+▼リスト2-9
+const month = 7 //☆
+
+if (month <= 0)
+    console.log("不明です。")
+else if (month < 3)
+    console.log(month + "月は、冬です。")
+else if (month < 6)
+    console.log(month + "月は、春です。")
+else if (month < 9)
+    console.log(month + "月は、夏です。")
+else if (month < 12)
+    console.log(month + "月は、秋です。")
+else if (month < 13)
+    console.log(month + "月は、冬です。")
+else
+    console.log("不明です。")
+
+
+
+
+▼リスト2-10
+const num = 12345 //☆
+
+const result = num % 2 === 0 ? '偶数' : '奇数'
+console.log(num + 'は、' + result + 'です。')
+
+
+
+
+▼リスト2-11
+const month = 7
+
+switch (month) {
+    case 1:console.log(month + "月は、冬です。"); break
+    case 2:console.log(month + "月は、冬です。"); break
+    case 3:console.log(month + "月は、春です。"); break
+    case 4:console.log(month + "月は、春です。"); break
+    case 5:console.log(month + "月は、春です。"); break
+    case 6:console.log(month + "月は、夏です。"); break
+    case 7:console.log(month + "月は、夏です。"); break
+    case 8:console.log(month + "月は、夏です。"); break
+    case 9:console.log(month + "月は、秋です。"); break
+    case 10:console.log(month + "月は、秋です。"); break
+    case 11:console.log(month + "月は、秋です。"); break
+    case 12:console.log(month + "月は、冬です。"); break
+    default: console.log("不明です。")
+}
+
+
+
+
+▼リスト2-12
+const max = 100 //☆
+let total = 0
+let count = 0
+
+while(count <= max) {
+    total += count++
+}
+console.log(max + "までの合計は、" + total)
+
+
+
+
+▼リスト2-13
+do
+    total += count++
+while(count <= max)
+
+
+
+
+▼リスト2-14
+const max = 100 //☆
+let total = 0
+
+for(let i = 1;i <= max;i++) {
+    total += i
+}
+console.log(max + "までの合計は、" + total)
+
+
+
+
+▼リスト2-15
+const data = [10, 20, 30]
+const total = data[0] + data[1] + data[2]
+console.log('合計' + total)
+
+
+
+
+▼リスト2-16
+const data1:number[] = [10,20,30]
+let data2:readonly number[] = [10,20,30]
+
+data1[0] = 100
+data2[0] = 100
+
+
+
+
+▼リスト2-17
+const data = [100,98,76,59,87]
+let total = 0
+for (let item of data) {
+    total += item
+}
+const av = total / data.length
+console.log('合計' + total)
+console.log('平均：' + av)
+
+
+
+
+▼リスト2-18
+let data:any = [10,20,30,40,50]
+
+console.log(data)
+for(let i = 0;i < 5;i++) {
+    data.pop()
+    data.unshift('☆')
+    console.log(data)
+}
+
+
+
+
+▼リスト2-19
+let me:[string, number]
+let you:[string, number]
+
+me = ['taro', 39]
+you = ['hanako', 'hanako@flower.com']
+
+console.log(me)
+console.log(you)
+
+
+
+
+▼リスト2-20
+enum janken { goo, choki, paa }
+
+const you = janken.goo //☆
+
+switch(you) {
+    case janken.goo:
+    console.log('あいこです。')
+    break
+    case janken.choki:
+    console.log('あなたの勝ち！')
+    break
+    case janken.paa:
+    console.log('あなたの負け...')
+    break
+}
+
+
+
+
+▼リスト2-21
+type name = string
+type age = number
+
+let me:[name, age]
+let you:[age, name]
+
+me = ['taro', 39]
+you = [28, 'hanako']
+
+console.log(me)
+console.log(you)
+
+
+
+
+▼リスト2-22
+type name = string
+type mail = string
+type age = number
+type person = [name, mail, age]
+
+const taro:person = ['taro','taro@yamda',39]
+const hanako:person = ['hanako','hanako@flower',28]
+const sachiko:person = ['sachiko','sachiko@happy',17]
+
+const data:person[] = [taro,hanako,sachiko]
+
+for(let item of data) {
+    console.log(item)
+}
+
+
+
+
+▼リスト2-23
+type hello = "hello"
+type bye = "bye"
+type name = string
+
+const taro:name = "taro"
+const msg1:hello = "hello" //☆
+console.log(msg1 + ", " + taro)
+const hanako:name = "hanako"
+const msg2:bye = "bye" //☆
+console.log(msg2 + ", " + hanako)
+
+
+
+
+▼リスト2-24
+type msg = "hello" | "bye"
+type name = string
+
+const taro:name = "taro"
+const msg1:msg = "hello"
+console.log(msg1 + ", " + taro)
+const hanako:name = "hanako"
+const msg2:msg = "bye"
+console.log(msg2 + ", " + hanako)
+
+
+
+
+▼リスト2-25
+type id = number | string
+
+const idA:id = "taro"
+const idB:id = 123
+
+const tp = idA //☆
+
+switch(typeof(tp)) {
+    case "number":
+    console.log(tp + "は、number型です。")
+    break
+    case "string":
+    console.log(tp + "は、string型です。")
+    break
+    default:
+    console.log("型不明。")
+}
+
+
+
+
+▼リスト2-26
+type data = [string, number]
+type ReqData = Readonly<data>
+
+const x:data = ["taro",39]
+const y:ReqData = ["hanako",28]
+
+x[1] = 28
+y[1] = 17
+
+console.log(x)
+console.log(y)
+
+
+
+
+▼リスト2-27
+const a1:string = "ok"
+const b1:string = "ok"
+console.log(a1 == b1)
+console.log(a1 === b1)
+
+const a2:unique symbol = Symbol("ok")
+const b2:unique symbol = Symbol("ok")
+console.log(a2 == b2)
+console.log(a2 === b2)
+
+
+
+
+▼リスト2-28
+type data = [name:string, age?:number]
+
+const taro:data = ["taro", 39]
+const hanako:data = ["hanako"]
+console.log(taro)
+console.log(hanako)
+
+
+
+
+■3章
+----------------------------------------
+▼リスト3-1
+function hello(name:string) {
+    console.log("Hello, " + name + "!")
+}
+
+hello("Taro")
+hello("Hanako")
+
+
+
+
+▼リスト3-2
+function total(max:number) {
+    var num = 0
+    for(var i = 1;i < max;i++) {
+        num += i
+    }
+    console.log("total:" + (num + i))
+}
+
+total(100)
+total(200)
+total(300)
+
+
+
+
+▼リスト3-3
+function total(max:number) {
+    let num = 0 //☆
+    for(let i = 1;i < max;i++) { //☆
+        num += i
+    }
+    console.log("total:" + (num + i))
+}
+
+
+
+
+▼リスト3-4
+function total(max:number):number {
+    let num = 0
+    for(let i = 1;i <= max;i++) {
+        num += i
+    }
+    return num
+}
+
+function printTotal(n:number):void {
+    let res = total(n)
+    console.log(n + "までの合計：" + res)
+}
+
+printTotal(123)
+printTotal(1234)
+printTotal(12345)
+
+
+
+
+▼リスト3-5
+function printTotal(n:number):void {
+    console.log(n + "までの合計：" + total(n))
+}
+
+
+
+
+▼リスト3-6
+function calcTax(price:number):[price:number, tax:number] {
+    const p = price / 1.1
+    const t = price - p
+    return [p, t]
+}
+
+function printTax(price:number):void {
+    const [pr, tx] = calcTax(price)
+    console.log(price + "の本体価格：" + pr + "、税額：" + tx)
+}
+
+printTax(2750)
+printTax(3080)
+
+
+
+
+▼リスト3-7
+function printPerson(id:number | string, name:string,age:number):void {
+    switch (typeof(id)) {
+        case 'string':
+        console.log('your id is "' + id + '".')
+        break
+        case 'number':
+        console.log("No," + id)
+        break
+        default:
+        console.log('wrong id...')
+    }
+    console.log('Name:' + name + ' (' + age + ')')
+}
+
+printPerson(10,"taro",39)
+printPerson('flower', "hanako", 28)
+
+
+
+
+▼リスト3-8
+function printPerson(name?:string,age?:number):void {
+    const nameval = name ? name : "no-name"
+    const ageval = age ? String(age) : '-'
+    console.log('Name:' + nameval + ' (' + ageval + ')')
+}
+
+printPerson("taro",39)
+printPerson("hanako")
+printPerson()
+
+
+
+
+▼リスト3-9
+function printPerson(name:string = "no-name",age:number = -1):void {
+    console.log('Name:' + name + ' (' + age + ')')
+}
+
+
+
+
+▼リスト3-10
+const f = (...data:number[]):number => {
+    let total = 0
+    for (let i of data) {
+        total += i
+    }
+    return total
+}
+
+console.log(f(1,2,3,4,5))
+console.log(f(10,20,30,40,50,60,70,80,90))
+console.log(f(123,456,78,90))
+
+
+
+
+▼リスト3-11
+const f = function(name:string):void {
+    console.log("Hello, " + name + "!")
+}
+
+f("taro")
+f("hanako")
+
+
+
+
+▼リスト3-12
+const f = (name:string):void => {
+    console.log("Hello, " + name + "!")
+}
+
+f("taro")
+f("hanako")
+
+
+
+
+▼リスト3-13
+const f = function(name:string):void {
+    console.log("Hello, " + name + "!")
+}
+
+console.log(typeof(f))
+
+
+
+
+▼リスト3-14
+hello("Taro")
+hello("Hanako")
+
+const hello = (name:string)=>{
+    console.log("Hello, " + name + "!")
+}
+
+
+
+
+▼リスト3-15
+hello("Taro")
+hello("Hanako")
+
+function hello(name:string) {
+    console.log("Hello, " + name + "!")
+}
+
+
+
+
+▼リスト3-16
+const f = (n:number) => {
+    const inF = (n:number):void=> {
+        console.log("value:" + n)
+    }
+    let total = 0
+    for(let i = 1;i<= n;i++){
+        total += i
+        inF(total)
+    }
+}
+
+f(10)
+
+
+
+
+▼リスト3-17
+const func = (n:number, f:Function):void=> {
+    let res = f(n)
+    console.log("Result: " + res)
+}
+
+const double = (n:number)=> n * 2
+const total = (n:number)=> {
+    let total = 0
+    for(let i = 1;i <=n;i++)
+        total += i
+    return total
+}
+
+const num = 100 //☆
+func(num, double)
+func(num, total)
+
+
+
+
+▼リスト3-18
+const func = (n:number, f:(n:number)=>number|string):void=> {
+    let res = f(n)
+    console.log("Result: " + res)
+}
+
+
+
+
+▼リスト3-19
+const func = (n:number, f:(n:number)=>number|string):void=> {
+    let res = f(n)
+    console.log("Result: " + res)
+}
+
+const double = (n:number):number => n * 2
+const word = (n:number):string => {
+    const w = ['〇','一','二','三','四','五','六','七','八','九']
+    const s = String(n)
+    let res:string[] = []
+    for(let i = 0;i < s.length;i++) {
+        let c = s.charAt(i)
+        res.push(w[Number(c)])
+    }
+    return res.join('')
+}
+
+const num = 1230
+func(num, double)
+func(num, word)
+
+
+
+
+▼リスト3-20
+const f = (tax:number):(n:number)=>number => {
+    return (n:number)=> n * (1 + tax)
+}
+
+const f1 = f(0.1)
+const f2 = f(0.08)
+
+const price = 123400
+console.log(f1(price))
+console.log(f2(price))
+
+
+
+
+▼リスト3-21
+const f = (n:number):()=>number => {
+    let count:number = 0
+    return ():number => {
+        count += n
+        return count
+    }
+}
+
+const f1 = f(1)
+const f2 = f(2)
+const f3 = f(3)
+
+
+for(let i = 0;i < 10;i++) {
+    console.log(f1() + '\t' + f2() + '\t' + f3())
+}
+
+
+
+
+▼リスト3-22
+const f = (arr?:any[]):void => {
+    let res = 'Array: '
+    for (let i of arr) {
+        res += String(i) + '\t'
+    }
+    console.log(res)
+}
+
+f(['ok','NG'])
+f([10,20,30])
+f()
+
+
+
+
+▼リスト3-23
+const f = (arr?:any[]):void => {
+    let res = 'Array: '
+    for (let i of arr) {
+        res += String(i) + '\t'
+    }
+    console.log(res)
+}
+
+try {
+    f(['ok','NG'])
+    f([10,20,30])
+    f()
+} catch(e) {
+    console.log(e.message)
+}
+
+
+
+
+▼リスト3-24
+const f = (n:number):[number, Error?] => {
+    if (n < 0) {
+        return [n, Error("負の値です。")]
+    }
+    let total =0
+    for (let i = 1;i<=n;i++)
+        total += i
+    return [total]
+}
+
+let [res1, err1] = f(100)
+if (err1 == undefined)
+    console.log(res1)
+else console.log(err1)
+
+let [res2, err2] = f(-100)
+if (err2 == undefined) 
+    console.log(res2)
+else console.log(err2)
+
+
+
+
+▼リスト3-25
+const f = (n:number):number => {
+    if (n < 0) {
+        throw Error("負の数です。")
+    }
+    let total =0
+    for (let i = 1;i<=n;i++)
+        total += i
+    return total
+}
+
+let re1 = f(100)
+console.log(re1)
+let re2 = f(-100)
+console.log(re2)
+
+
+
+
+▼リスト3-26
+const f = (n:number):number => {
+    if (n < 0) {
+        throw Error("負の数です。")
+    }
+    let total =0
+    for (let i = 1;i<=n;i++)
+        total += i
+    return total
+}
+
+try {
+    let re1 = f(100)
+    console.log(re1)
+    let re2 = f(-100)
+    console.log(re2)
+} catch(e) {
+    console.log(e.message)
+}
+
+
+
+
+▼リスト3-27
+function getRnd<T>(values: T[]): T {
+    const r = Math.floor(Math.random() * values.length)
+    return values[r]
+}
+
+const data1 = [0,2,4,6,8,10]
+const data2 = ['グー','チョキ','パー']
+const data3 = [true,false]
+
+for(let i = 0;i < 10;i++) {
+    const re1 = getRnd(data1)
+    const re2 = getRnd(data2)
+    const re3 = getRnd(data3)
+    const res = re1 + '(' + typeof(re1) + ')\t'
+        +  re2 + '(' + typeof(re2) + ')\t'
+        +  re3 + '(' + typeof(re3) + ')'
+    console.log(res)
+}
+
+
+
+
+▼リスト3-28
+function* fibo(n:number) {
+    let n1 = 0
+    let n2 = 1
+    for(let i = 0;i <= n;i++) {
+        yield n1
+        let n3 = n1 + n2
+        n1 = n2
+        n2 = n3
+    }
+}
+
+const n = 10
+let fb = fibo(n)
+for (let i = 0;i <= n + 3;i++) {
+    let ob = fb.next()
+    console.log(ob.value)
+}
+
+
+
+
+▼リスト3-29
+const f = (n:number, d:number): Promise<number> =>{
+    console.log("start:" + n)
+    return new Promise((f) => {
+        let total = 0
+        for(let i = 1;i <= n;i++)
+            total += i
+        setTimeout(() => {
+            f(total)
+        }, d)
+    })
+}
+
+const cb = (n:number)=> {
+    console.log("result:" + n)
+}
+
+f(10,300).then(cb)
+f(100,200).then(cb)
+f(1000,100).then(cb)
+
+console.log("do something...")
+
+
+
+
+▼リスト3-30
+console.log("Node path = " + process.argv[0])
+console.log("script file path = " + process.argv[1])
+
+const data: number[] = []
+for (var i = 2; i < process.argv.length; i++) {
+    data.push(Number(process.argv[i]))
+}
+console.log(data)
+
+for (let item of data) {
+    const res = primeFactor(item)
+    console.log(item + '= ' + res)
+}
+
+function primeFactor(a: number): number[] {
+    const v: number[] = []
+    let x = a
+    let n = 2
+    while (x > n) {
+        if (x % n == 0) {
+            x = x / n
+            v.push(n)
+        } else {
+            n += n == 2 ? 1 : 2
+        }
+    }
+    v.push(x)
+    return v
+}
+
+
+
+
+▼リスト3-31
+console.log("Node path = " + process.argv[0])
+console.log("script file path = " + process.argv[1])
+
+const data: number[] = []
+for (var i = 2; i < process.argv.length; i++) {
+    data.push(Number(process.argv[i]))
+}
+console.log('parameters: ' + data)
+
+const f = aggregate()
+
+for (let item of data) {
+    const res = f(item)
+    console.log(res)
+}
+
+function aggregate(): (n:number)=>[number,number,number, number, number] {
+    let total = 0
+    let totalp = 0
+    let totalt = 0
+    return (n:number):[number, number, number, number, number] => {
+        total += n
+        let tax = Math.floor(n - n / 1.1)
+        totalp += n - tax
+        totalt += tax
+        return [n,tax,total,totalp, totalt]
+    }
+}
+
+
+
+
+■4章
+----------------------------------------
+▼リスト4-1
+const person = {
+    name:"taro",
+    age: 39,
+    print: function():void {
+        console.log(this.name + '(' 
+            + this.age + ')')
+    }
+}
+
+
+
+
+▼リスト4-2
+person.print()
+person.name = 'hanako'
+person.age = 28
+person.print()
+
+
+
+
+▼リスト4-3
+const person = Object()
+person.name = "taro"
+person.age = 39
+person.print = function():void {
+    console.log(this.name + '(' 
+        + this.age + ')')
+}
+
+
+
+
+▼リスト4-4
+function Person(n:string, a:number):
+        {name:string, age:number, print:()=>void} {
+    return {
+        name:n,
+        age:a,
+        print: function() {
+            console.log(this.name + 
+                '(' + this.age + ')')
+        }
+    }
+}
+
+const taro = Person('taro', 39)
+const hana = Person('hanako', 28)
+taro.print()
+hana.print()
+
+
+
+
+▼リスト4-5
+type person = {name:string, age:number}
+
+function setData(ob:person, n:string,a:number):person {
+    ob.name = n
+    ob.age = a
+    return ob
+}
+
+const ob1:person = {name:'taro', age:39}
+const ob2:person = setData(ob1,'hanako',28)
+
+console.log(ob1)
+console.log(ob2)
+
+
+
+
+▼リスト4-6
+type person = {name:{first:string, second:string}, age:number}
+
+const ob1:person = {name:{first:'taro', second:'yamada'}, age:39}
+const first = ob1.name.first
+const second = ob1.name.second
+const age = ob1.age
+
+console.log(first + "-" + second + '::' + age)
+
+
+
+
+▼リスト4-7
+type person = {name:{first:string, second:string}, age:number}
+
+const ob1:person = {name:{first:'taro', second:'yamada'}, age:39}
+const {name:{first, second}, age} = ob1 //☆
+console.log(first + "-" + second + '::' + age)
+
+
+
+
+▼リスト4-8
+type person = {readonly name:string, mail?:string, age?:number, print:()=>void}
+
+const ob1:person = {
+    name:'taro',
+    age:39,
+    print:function():void {
+        console.log(this.name + ':' + this.age)
+    }
+}
+const ob2:person = {
+    name:'hanako',
+    mail:'hanako@flower',
+    print:function():void {
+        console.log(this.name + ':' + this.mail)
+    }
+}
+
+// ob1.name = "Taro" //☆
+
+ob1.print()
+ob2.print()
+
+
+
+
+▼リスト4-9
+class Person {
+    name:string ='no-name'
+    mail?:string
+    age?:number
+    print():void {
+        const ml:string = this.mail ? this.mail : 'no-mail'
+        const ag:number =  this.age ? this.age : -1
+        console.log(this.name + '(' + ml + ',' + ag + ')') 
+    }
+}
+
+const taro = new Person()
+taro.name = 'taro'
+taro.mail = 'taro@yamada'
+taro.age = 39
+
+taro.print()
+
+
+
+
+▼リスト4-10
+class Person {
+    name:string ='no-name'
+    mail:string
+    age:number
+
+    constructor(name:string, mail:string = 'no-mail', age:number = -1) {
+        this.name = name
+        this.mail = mail
+        this.age = age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail + ',' + this.age + ')') 
+    }
+}
+
+const taro = new Person('taro','taro@yamada',39)
+const hanako = new Person('hanako','hanako@flowe')
+const sachiko = new Person('sachiko')
+taro.print()
+hanako.print()
+sachiko.print()
+
+
+
+
+▼リスト4-11
+class Person {……変更ないため省略……}
+
+const taro = new Person('taro','taro@yamada',39)
+const hanako = new Person('hanako','hanako@flowe')
+
+console.log(taro instanceof Person 
+        === hanako instanceof Person === true)
+
+console.log(taro.constructor.name)
+console.log(hanako.constructor.name)
+console.log(Person.name)
+
+
+
+
+▼リスト4-12
+class Person {……変更ないため省略……}
+
+enum School {
+    junior='junior',
+    juniorHigh='juniorHigh',
+    high='high',
+    other='other'
+}
+
+class Student extends Person {
+    school?:School
+    grade?:number
+    
+    constructor(name:string,school:School, grade:number) {
+        super(name)
+        this.school= school
+        this.grade = grade
+        switch(school) {
+            case School.junior:
+            this.age = 6 + this.grade; break
+            case School.juniorHigh:
+            this.age = 12 + this.grade; break
+            case School.high:
+            this.age = 15 + this.grade; break
+            default:
+            this.age = -1
+        }
+    }
+}
+
+const taro = new Person('taro','taro@yamada',39)
+const hanako = new Student('hanako',School.high,2)
+
+taro.print()
+hanako.print()
+
+
+
+
+▼リスト4-13
+print():void {
+    let gd:string = this.grade ? String(this.grade) : '-'
+    switch(this.grade) {
+        case 1: gd += 'st'; break
+        case 2: gd += 'nd'; break
+        case 3: gd += 'rd'; break
+        default: gd += 'th'
+    }
+    console.log(this.name + '(' + this.school + ' school: ' + gd + ' grade)') 
+}
+
+
+
+
+▼リスト4-14
+class Person {
+    protected name:string ='no-name'
+    private mail:string
+    public age:number
+
+    constructor(name:string, mail:string = 'no-mail', age:number = -1) {
+        this.name = name
+        this.mail = mail
+        this.age = age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail + ',' + this.age + ')') 
+    }
+}
+
+class Student extends Person {
+    school?:School
+    grade?:number
+    
+    constructor(name:string,school:School, grade:number) {
+        super(name)
+        this.school= school
+        this.grade = grade
+        switch(school) {
+            case School.junior:
+            this.age = 6 + this.grade; break
+            case School.juniorHigh:
+            this.age = 12 + this.grade; break
+            case School.high:
+            this.age = 15 + this.grade; break
+            default:
+            this.age = -1
+        }
+    }
+
+    print():void {
+        let gd:string = this.grade ? String(this.grade) : '-'
+        switch(this.grade) {
+            case 1: gd += 'st'; break
+            case 2: gd += 'nd'; break
+            case 3: gd += 'rd'; break
+            default: gd += 'th'
+        }
+        console.log(this.name + '(' + this.school + ' school: ' + gd + ' grade)') 
+    }
+}
+
+
+
+
+▼リスト4-15
+const hanako = new Student('hanako',School.high,2)
+hanako.name = "花子"
+hanako.mail = "hanako@flower"
+hanako.age = 28
+
+
+
+
+▼リスト4-16
+class Student extends Person {
+    school?:School
+    private grade_num:number = -1
+    get gradeN():number {
+        return this.grade_num
+    }
+    set gradeN(n:number) {
+        this.grade_num = n
+        this.grade = String(n)
+    }
+    private gr_str:string = ''
+    get grade():string {
+        return this.gr_str
+    }
+    private set grade(pr:string) {
+        let gd = pr
+        switch(this.gradeN) {
+            case 1: gd += 'st'; break
+            case 2: gd += 'nd'; break
+            case 3: gd += 'rd'; break
+            default: gd += 'th'
+        }
+        this.gr_str = gd
+    }
+
+    constructor(name:string,school:School, grade:number) {
+        super(name)
+        this.school= school
+        this.gradeN = grade
+    }
+
+    print():void {
+        let gd:string = this.grade ? String(this.grade) : '-'
+        console.log(this.name + '(' + this.school + ' school: ' + gd + ' grade)') 
+    }
+}
+
+
+
+
+▼リスト4-17
+enum School {……変更ないため省略……}
+
+interface Human {
+    name:string
+    print():void
+}
+
+class Person implements Human {
+    name:string ='no-name'
+    mail:string
+    age:number
+
+    constructor(name:string, mail:string = 'no-mail', age:number = -1) {
+        this.name = name
+        this.mail = mail
+        this.age = age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail + ',' + this.age + ')') 
+    }
+}
+
+class Student implements Human {
+    name:string = 'no-name'
+    school?:School
+    grade?:number
+
+    constructor(name:string,school?:School, grade?:number) {
+        this.name = name
+        this.school= school
+        this.grade = grade
+    }
+
+    print():void {
+        let gd:string = this.grade ? String(this.grade) : '-'
+        console.log(this.name + '(' + this.school + ' school: ' + gd + ' grade)') 
+    }
+}
+
+
+
+
+▼リスト4-18
+const taro:Person = new Person('taro','taro@yamada',39)
+const hanako:Student = new Student('hanako',School.high,2)
+const sachiko:Person = new Person('sachiko')
+const jiro:Student = new Student('jiro')
+
+const data:Human[] = [taro,hanako,sachiko,jiro]
+
+for(let item of data) {
+    item.print()
+}
+
+
+
+
+▼リスト4-19
+interface People extends Human {
+    birth:Date
+}
+
+class Employee implements People {
+    name:string = 'no-name'
+    company:string = ''
+    birth:Date = new Date()
+
+    constructor(nm:string, cm:string, bth:Date) {
+        this.name = nm
+        this.company = cm
+        this.birth = bth
+
+    }
+
+    print():void {
+        console.log(this.name + ' [' + this.company + ']')
+    }
+}
+
+const ichiro = new Employee('ichiro', 
+    'Baseball Inc.', new Date('1982/10/10'))
+ichiro.print()
+
+
+
+
+▼リスト4-20
+abstract class Human {
+    abstract print():void
+}
+
+class Person extends Human {
+    ……略……
+}
+
+class Student extends Human {
+    ……略……
+}
+
+
+
+
+▼リスト4-21
+class StaticHuman {
+    static fullname:string
+    static age:number
+
+    static set(nm:string, ag:number):void {
+        this.fullname = nm
+        this.age = ag
+    }
+
+    static print():void {
+        console.log(this.fullname + '(' + this.age + ')')
+    }
+}
+
+StaticHuman.set('taro',39)
+StaticHuman.print()
+StaticHuman.set('hanako',28)
+StaticHuman.print()
+
+
+
+
+▼リスト4-22
+class Human {
+    constructor(readonly name:string, readonly age:number) {
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.age + ')')
+    }
+}
+
+const taro = new Human('taro', 39)
+taro.print()
+const hana = new Human('hanako', 28)
+hana.print()
+
+
+
+
+▼リスト4-23
+class Data<T> {
+    data?:T[]
+
+    constructor(...item:T[]) {
+        this.data = item
+    }
+
+    print():void {
+        if (this.data) {
+            for(let item of this.data) {
+                console.log(item)
+            }
+        } else {
+            console.log('no data...')
+        }
+    }
+}
+
+const data1 = new Data<string>('one','two','three')
+const data2 = new Data<number>(123,456,78,90)
+data1.print()
+data2.print()
+
+
+
+
+▼リスト4-24
+type Human = {
+    name:string
+    mail?:string
+    age?:number
+}
+
+class Person {
+    human:Required<Human>
+
+    constructor(nm:string, ml:string, ag:number) {
+        this.human = {name:nm, mail:ml, age:ag}
+    }
+
+    print():void {
+        console.log(this.human.name 
+            + ' (' + this.human.age + '::'
+            + this.human.mail + ')')
+    }
+}
+
+const taro = new Person('taro','taro@yamada', 39)
+taro.print()
+
+
+
+
+▼リスト4-24
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="main.js"></script>
+</head>
+<body>
+  <h1 class="bg-primary text-white p-2">Memo page</h1>
+  <div class="container">
+    <p class="h5">type message:</p>
+    <div class="alert alert-primary">
+      <input type="text" class="form-control" id="message" />
+      <button class="btn btn-primary mt-2" id="btn">
+        Save</button>
+    </div>
+    <table class="table" id="table"></table>
+    <div class="text-center">
+      <button class="btn btn-danger mt-4" id="initial">
+      Initialize
+      </button></div>
+  </div>
+</body>
+</html>
+
+
+
+
+▼リスト4-25
+let table:HTMLTableElement
+let message:HTMLInputElement
+
+function showTable(html:string) {
+    table.innerHTML = html
+}
+
+function doAction() {
+    const msg = message.value
+    memo.add({message:msg,date:new Date()})
+    memo.save()
+    memo.load()
+    showTable(memo.getHtml())
+}
+
+function doInitial() {
+    memo.data = []
+    memo.save()
+    memo.load()
+    message.value = ''
+    showTable(memo.getHtml())
+}
+
+type Memo = {
+    message:string,
+    date:Date
+}
+
+class MemoData {
+    data:Memo[] = []
+
+    add(mm:Memo):void {
+        this.data.unshift(mm)
+    }
+
+    save():void {
+        localStorage.setItem('memo_data', JSON.stringify(this.data))
+    }
+    load():void {
+        const readed = JSON.parse(localStorage.getItem('memo_data'))
+        this.data = readed ? readed : []
+    }
+
+    getHtml():string {
+        let html = '<thead><th>memo</th><th>date</th></thead><tbody>'
+        for(let item of this.data) {
+            html += '<tr><td>' + item.message + '</td><td>' 
+                + item.date.toLocaleString() + '</td></tr>'
+        }
+        return html + '</tbody>'
+    }
+}
+
+const memo = new MemoData()
+
+window.addEventListener('load',()=>{
+    table = document.querySelector('#table')
+    message = document.querySelector('#message')
+    document.querySelector('#btn').addEventListener('click', doAction)
+    document.querySelector('#initial').addEventListener('click',doInitial)
+    memo.load()
+    showTable(memo.getHtml())
+})
+
+
+
+
+■5章
+----------------------------------------
+▼リスト5-1
+type stringArray = {
+  [key in string]: string
+}
+
+const data1:stringArray = {
+    'start':'最初の値',
+    'middle':'中央の値',
+    'end':'最後の値'
+}
+data1['finish'] = '＊＊おしまい＊＊'
+data1[100] = 'ok'
+console.log(data1)
+
+
+
+
+▼リスト5-2
+enum human {name='name', mail='mail'}
+
+type HumanMap = {
+  [key in human]: string
+}
+
+const taro:HumanMap = {
+    name:'taro', 
+    mail:'taro@yamada'
+}
+console.log(taro)
+const hana:HumanMap = {
+    name:'hanako', 
+    mail:'hanako@flower'
+}
+console.log(hana)
+
+
+
+
+▼リスト5-3
+class Student {
+    name:string
+    school:string
+    grade:number
+
+    constructor(nm:string, sc:string, gr:number) {
+        this.name = nm
+        this.school = sc
+        this.grade = gr
+    }
+
+    print():void {
+        console.log('<< ' + this.name + ',' +
+            this.school + ':' + this.grade + ' >>')
+    }
+}
+class Employee {
+    name:string
+    title:string
+    department:string
+
+    constructor(nm:string, tt:string, dp:string) {
+        this.name = nm
+        this.title = tt
+        this.department = dp
+    }
+
+    print():void {
+        console.log(this.name + '[' + this.title + 
+            ',' + this.department + ']')
+    }
+}
+
+type People = Student | Employee
+
+const taro:People = new Student('taro','high school',3)
+const hana:People = new Employee('hanako','president','sales')
+const sachi:People = new Student('sachiko','jinir-high school',1)
+const jiro:People = new Employee('jiro','director','labo')
+
+const data:People[] = [taro,hana,sachi,jiro]
+for(let item of data) {
+    item.print()
+}
+
+
+
+
+▼リスト5-4
+class Student {……変更ないため省略……}
+class Employee {……変更ないため省略……}
+
+type People = Student|Employee
+
+class Human {
+    data:People[] = []
+
+    add(item:People):void {
+        this.data.push(item)
+    }
+
+    print():void {
+        for(let item of this.data) {
+            let ob
+            switch(item.constructor.name) {
+                case 'Student':
+                ob = item as Student
+                console.log(ob.name + ', ' + ob.school
+                    + '(' + ob.grade + ')')
+                break
+                case 'Employee':
+                ob = item as Employee
+                console.log(ob.name + ':' + ob.title 
+                    + ':' + ob.department)
+                break
+                default:
+                console.log('cannot print.')
+            }
+        }
+    }
+}
+
+const taro:People = new Student('taro','high school',3)
+const hana:People = new Employee('hanako','president','sales')
+const sachi:People = new Student('sachiko','jinir-high school',1)
+const jiro:People = new Employee('jiro','director','labo')
+
+const human = new Human()
+human.add(taro)
+human.add(hana)
+human.add(sachi)
+human.add(jiro)
+
+human.print()
+
+
+
+
+▼リスト5-5
+const data = [10, 20, 30]
+const msg = `data is [ ${data} ]!`
+console.log(msg)
+const result = `total is ${data[0]+data[1]+data[2]} !`
+console.log(result)
+
+
+
+
+▼リスト5-6
+type val_name = "sample"|"private"|"public"
+type data_type = `${val_name}_data`
+type prop_type = `${val_name}_property`
+type method_type = `${val_name}_method`
+
+const s:data_type = "sample_data"
+const t:prop_type = "public_property"
+const u:method_type = "private_method"
+const v:data_type = "personal_data"
+
+
+
+
+▼リスト5-7
+type prop_name = 'name' | 'mail' | 'age'
+type Person = Record<prop_name, string|number>
+
+const taro:Person = {
+    name:'taro',
+    mail:'taro@yamada',
+    age:39
+}
+console.log(taro)
+
+
+
+
+▼リスト5-8
+type person_data = {
+    name:string,
+    mail:string,
+    address:string,
+    age:number
+}
+
+type person_keys = 'name' | 'age'
+type human_keys = 'name' | 'mail' | 'address'
+
+type person = Pick<person_data, person_keys>
+type human = Pick<person_data,human_keys>
+
+const taro:person = {
+    name:'taro',
+    age:39
+}
+const hana:human = {
+    name:'hanako',
+    mail:'hanako@flower',
+    address:'chiba'
+}
+console.log(taro)
+console.log(hana)
+
+
+
+
+▼リスト5-9
+class MyData<T> {
+    data:T[] = []
+
+  constructor(...data: T[]) {
+      this.data = data
+  }
+
+  add(val:T) {
+      this.data.push(val)
+  }
+
+  [Symbol.iterator]() {
+    let pos = 0;
+    let items = this.data;
+    
+    return {
+      next():IteratorResult<T> {
+        if (pos < items.length) {
+          return {
+            done: false,
+            value: items[pos++]
+          }
+        } else {
+          return {
+            done: true,
+            value: null
+          }
+        }
+      }
+    }
+  }
+}
+
+const data = new MyData<string>('one','two','three')
+
+for (let item of data) {
+    console.log(item)
+}
+
+
+
+
+▼リスト5-10
+namespace myapp {
+
+    namespace foundation {
+
+        export interface printable {
+            print():void
+        }
+
+        export interface stringable {
+            getString():string
+        }
+    }
+
+    export type Person = {
+        name:string
+        age:number
+    }
+
+    export class MyData implements 
+            foundation.printable, 
+            foundation.stringable {
+        
+        people:Person[] = []
+
+        constructor(){}
+
+        add(nm:string, ag:number) {
+            this.people.push({name:nm, age:ag})
+        }
+
+        print():void {
+            console.log('*** mydata ***\n' + this.getString())
+        }
+
+        getString():string {
+            let res = '[\n'
+            for (let item of this.people) {
+                res += '  "' +item.name + ' (' + item.age + ')",\n'
+            }
+            return res + ']'
+        }
+    }
+}
+
+const mydata = new myapp.MyData()
+mydata.add('taro', 39)
+mydata.add('hanako',28)
+mydata.add('sachiko', 17)
+mydata.add('jiro', 6)
+mydata.print()
+
+
+
+
+▼リスト5-11
+export interface printable {
+    print():void
+}
+
+export interface stringable {
+    getString():string
+}
+
+export type Person = {
+    name:string
+    age:number
+}
+
+export class MyData implements printable,stringable {
+
+    people:Person[] = []
+
+    constructor(){}
+
+    add(nm:string, ag:number) {
+        this.people.push({name:nm, age:ag})
+    }
+
+    print():void {
+        console.log('*** mydata ***\n' + this.getString())
+    }
+
+    getString():string {
+        let res = '[\n'
+        for (let item of this.people) {
+            res += '  "' +item.name + ' (' + item.age + ')",\n'
+        }
+        return res + ']'
+    }
+}
+
+
+
+
+▼リスト5-12
+import { MyData } from './lib'
+
+const mydata = new MyData()
+mydata.add('taro', 39)
+mydata.add('hanako',28)
+mydata.add('sachiko', 17)
+mydata.add('jiro', 6)
+mydata.print()
+
+
+
+
+▼リスト5-13
+function applyMixins(derivedCtor: any, constructors: any[]) {
+  constructors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      Object.defineProperty(
+        derivedCtor.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+          Object.create(null)
+      );
+    });
+  });
+}
+
+
+
+
+▼リスト5-14
+class Person {
+    name:string = ''
+    title:string = ''
+
+    setPerson(nm:string, tt:string):void {
+        this.name = nm
+        this.title = tt
+    }
+}
+
+class Pet {
+    kind:string = ''
+    age:number = 0
+
+    setPet(k:string, ag:number):void {
+        this.kind = k
+        this.age = ag
+    }
+}
+
+class Me {
+    print():void {
+        console.log(this.name + ' (' + this.age + ')\n'
+          + '"' + this.title + '". pet is ' + this.kind + '!')
+    }
+}
+
+interface Me extends Person,Pet {}
+applyMixins(Me, [Person,Pet])
+
+const me = new Me()
+me.setPerson('taro','designer')
+me.setPet('cat',2)
+me.print()
+
+
+
+
+▼リスト5-15
+function action(dt:number) {
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      console.log('fished promise!')
+      resolve("delay:" + dt)
+    }, dt)
+  })
+}
+
+// ☆actionの実行
+action(2000).then(res=>console.log(res))
+action(1000).then(res=>console.log(res))
+action(500).then(res=>console.log(res))
+
+
+
+
+▼リスト5-16
+async function doit() {
+  let re1 = await action(2000)
+  console.log(re1)
+  let re2 = await action(1000)
+  console.log(re2)
+  let re3 = await action(500)
+  console.log(re3)
+}
+
+doit()
+
+
+
+
+▼リスト5-17
+function getData(url:string) {
+    fetch(url).then(res=>res.text()).then(re=>{
+        console.log(re)
+    })
+}
+
+const url = 'https://tuyano-dummy-data.firebaseio.com/message.json'
+getData(url)
+
+
+
+
+▼リスト5-18
+function getData(url:string) {
+    fetch(url).then(res=>res.json()).then(re=> {
+        for (let item of re) {
+          console.log(item)
+        }
+    })
+}
+
+const url = 'https://tuyano-dummy-data.firebaseio.com/sample_data.json'
+getData(url)
+
+
+
+
+▼リスト5-19
+async function getData(url:string) {
+    const response = await fetch(url)
+    const result = await response.json()
+    for(let item of result) {
+      console.log(JSON.stringify(item))
+    }
+}
+
+const url = 'https://tuyano-dummy-data.firebaseio.com/sample_data.json'
+getData(url)
+
+
+
+
+▼リスト5-20
+async function getData(url:string, obj:object) {
+    await fetch(url, {
+      method:'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+    const response = await fetch(url)
+    const result = await response.json()
+    console.log(result)
+}
+
+const url = 'https://tuyano-dummy-data.firebaseio.com/sample_message.json'
+
+const obj = {
+  title:'Hello!',
+  message:'This is sample message!'
+}
+getData(url, obj)
+
+
+
+
+▼リスト5-21
+{
+  "rules": {
+            ".read": true,
+            ".write": true,
+        "boards": {
+        ".indexOn":["posted"]
+      },
+  }
+}
+
+
+
+
+▼リスト5-21
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="main.js"></script>
+</head>
+<body>
+  <h1 class="bg-primary text-white p-2">Board</h1>
+   <div class="container">
+    <h2>send message:</h2>
+    <div class="alert alert-primary">
+      <div>
+        <label>your nickname:</label>
+        <input type="text" id="nickname"
+          class="form-control form-control-sm"/>
+      </div>
+      <div>
+        <label>message:</label>
+        <input type="text" class="form-control" id="message"/>
+      </div>
+      <button class="btn btn-primary mt-2" id="btn">
+        fetch</button>
+      </div>
+    <table class="table mb-4" id="table"></table>
+    <div class="text-center">
+      <button class="btn btn-danger mb-4" id="delete">
+      delete all</button></div>
+  </div>
+</body>
+</html>
+
+
+
+
+▼リスト5-22
+let nickname:HTMLInputElement
+let message:HTMLInputElement
+let table:HTMLTableElement
+const url = 'https://《プロジェクト名》.firebaseio.com/boards.json'
+
+function doAction():void {
+    const data = {
+        nickname: nickname.value,
+        message: message.value,
+        posted: new Date().getTime()
+    }
+    sendData(url, data)
+}
+
+function doDelete():void {
+    fetch(url, {
+        method:'DELETE'
+    }).then(res=>{
+        console.log(res.statusText)
+        getData(url)
+    })
+}
+
+function sendData(url:string, data:object) {
+    fetch(url, {
+        method:'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res=>{
+        console.log(res.statusText)
+        getData(url)
+    })
+}
+
+function getData(url:string) {
+    fetch(url).then(res=>res.json()).then(re=> {
+        let result = `<thead>
+            <tr><th>Message</th>
+            <th>Nickname</th><th>posted</th></tr>
+        </thead><tbody>`
+        let tb = ''
+        for(let ky in re) {
+            let item = re[ky]
+            tb = '<tr><td>' + item['message'] + '</td><td>'
+                + item['nickname'] + '</td><td>' 
+                + new Date(item['posted']).toLocaleString()
+                + '</td></tr>' + tb
+        }
+        result += tb + '</tbody>'
+        table.innerHTML = result
+    })
+}
+
+window.addEventListener('load',()=>{
+    message = document.querySelector('#message')
+    nickname = document.querySelector('#nickname')
+    table = document.querySelector('#table')
+    const btn :HTMLButtonElement = 
+        document.querySelector('#btn')
+    btn.onclick = doAction
+    const del :HTMLButtonElement = 
+        document.querySelector('#delete')
+    del.onclick = doDelete
+    getData(url)
+})
+
+
+
+
+■6章
+----------------------------------------
+▼リスト6-1
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+    rel="stylesheet" crossorigin="anonymous">
+  <script src="main.js"></script>
+</head>
+<body>
+  <h1 class="bg-primary text-white p-2">Web sample</h1>
+  <div class="container">
+  <h2 class="my-3">Web sample</h2>
+  <div class="alert alert-primary">
+    <p id="msg">wait...</p>
+  </div>
+  </div>
+</body>
+</html>
+
+
+
+
+▼リスト6-2
+let msg:HTMLParagraphElement
+
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.textContent = "This is sample message!"
+})
+
+
+
+
+▼リスト6-3
+let msg:HTMLParagraphElement
+const html = `<h2>This is message</h2>
+    <p>これはTypeScriptで表示したコンテンツです。</p>`
+    
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.innerHTML = html
+})
+
+
+
+
+▼リスト6-4
+let msg:HTMLParagraphElement
+const html = `<h2><a id="title">This is message</a></h2>
+    <p>これはTypeScriptで表示したコンテンツです。</p>`
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.innerHTML = html
+    const title:HTMLAnchorElement = document.querySelector('#title')
+    title.href = "http://google.com"
+})
+
+
+
+
+▼リスト6-5
+let msg:HTMLParagraphElement
+const html = `<h3>This is message</h3>
+    <div id="content">wait...</div>`
+
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.innerHTML = html
+    const content:HTMLDivElement = document.querySelector('#content')
+    setDiv(content)
+})
+
+function setDiv(content:HTMLDivElement) {
+    content.style.width ="300px"
+    content.style.height = "300px"
+    content.style.borderWidth = "3px"
+    content.style.borderStyle = "solid"
+    content.style.borderColor = "red"
+    content.style.backgroundColor = "white"
+    content.textContent = ""
+}
+
+
+
+
+▼リスト6-6
+let msg:HTMLParagraphElement
+const html = `<h3>This is message</h3>
+    <div id="content">wait...</div>`
+
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.innerHTML = html
+    const content:HTMLDivElement = document.querySelector('#content')
+    setDiv(content)
+    addElement(content)
+})
+
+function setDiv(content:HTMLDivElement) {
+    content.style.position = "absolute"
+    content.style.left = "100px"
+    content.style.top = "100px"
+    content.style.width ="300px"
+    content.style.height = "300px"
+    content.style.borderWidth = "3px"
+    content.style.borderStyle = "solid"
+    content.style.borderColor = "red"
+    content.style.backgroundColor = "white"
+    content.textContent = ""
+}
+
+function addElement(content:HTMLDivElement) {
+    for(let i = 1;i <= 7;i++) {
+        let div:HTMLDivElement = document.createElement('div')
+        div.style.position = "absolute"
+        div.style.width = "100px"
+        div.style.height = "100px"
+        div.style.top = i * 25 + "px"
+        div.style.left = i * 25 + "px"
+        div.style.backgroundColor = "#aa00cc33"
+        content.appendChild(div)
+    }
+}
+
+
+
+
+▼リスト6-7
+let msg:HTMLParagraphElement
+const html = `<h3>This is message</h3>
+    <div id="content">wait...</div>`
+
+window.addEventListener('load',()=>{
+    msg = document.querySelector('#msg')
+    msg.innerHTML = html
+    const content:HTMLDivElement = document.querySelector('#content')
+    setDiv(content)
+})
+
+const addElement = function(event:MouseEvent) {
+    const div:HTMLDivElement = document.createElement('div')
+    div.style.position = "absolute"
+    div.style.width = "50px"
+    div.style.height = "50px"
+    div.style.left = event.offsetX - 25 + "px"
+    div.style.top = event.offsetY - 25 + "px"
+    div.style.backgroundColor = "#cc00aa33"
+    const target:HTMLElement = event.target as HTMLElement
+    target.appendChild(div)
+}
+
+function setDiv(content:HTMLDivElement) {
+    content.style.position = "absolute"
+    content.style.left = "100px"
+    content.style.top = "100px"
+    content.style.width ="300px"
+    content.style.height = "300px"
+    content.style.borderWidth = "3px"
+    content.style.borderStyle = "solid"
+    content.style.borderColor = "red"
+    content.style.backgroundColor = "white"
+    content.textContent = ""
+    content.addEventListener('click', addElement)
+}
+
+
+
+
+▼リスト6-8
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        ……略……
+    </head>
+    <body>
+        <noscript>……略……</noscript>
+        <div id="root"></div>
+    </body>
+</html>
+
+
+
+
+▼リスト6-9
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+);
+
+reportWebVitals();
+
+
+
+
+▼リスト6-10
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+    return (
+        <div className="App">
+            ……略……
+        </div>
+    );
+}
+
+export default App;
+
+
+
+
+▼リスト6-11
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+            rel="stylesheet" crossorigin="anonymous">
+        <title>React App</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+    </body>
+</html>
+
+
+
+
+▼リスト6-12
+import {useState, ReactElement} from 'react';
+import './App.css';
+
+function App():ReactElement {
+    const [msg,setMsg] = useState("This is sample message.")
+    return (
+        <div>
+            <h1 className="bg-primary text-white p-2">React sample</h1>
+            <div className="container">
+            <h2 className="my-3">click button!</h2>
+            <div className="alert alert-primary">
+                <div className="row px-2">
+                    <h3 id="msg">{msg}</h3>
+                </div>
+            </div>
+            </div>
+        </div>
+    );
+}
+
+export default App;
+
+
+
+
+▼リスト6-13
+import {useState, ReactElement} from 'react';
+import './App.css';
+
+function App():ReactElement {
+    const [counter,setCounter] = useState(0)
+    const doAction = ()=> {
+        setCounter(counter + 1)
+    }
+    return (
+        <div>
+            <h1 className="bg-primary text-white p-2">React sample</h1>
+            <div className="container">
+            <h2 className="my-3">click button!</h2>
+            <div className="alert alert-primary">
+                <div className="row px-2">
+                    <h3 id="msg" className="col">{counter} click.</h3>
+                    <button onClick= {doAction}
+                        className="btn btn-primary col-2">
+                            Click!
+                    </button>
+                </div>
+            </div>
+            </div>
+        </div>
+    );
+}
+
+export default App;
+
+
+
+
+▼リスト6-14
+import {ChangeEvent, KeyboardEvent, 
+        ReactElement, useState} from 'react'
+import './App.css'
+
+function App():ReactElement {
+    const [val, setVal] = useState(0)
+    const [data,setData] = useState<number[]>([])
+
+    const doChange = (event:ChangeEvent):void=> {
+        const ob = event.target as HTMLInputElement
+        const re = Number(ob.value)
+        setVal(re)
+    }
+
+    const doAction = ():void=> {
+        const arr:number[] = []
+        for (let item of data)
+            arr.push(item)
+        arr.push(val)
+        setData(arr)
+        setVal(0)
+    }
+
+    const doType = (event:KeyboardEvent):void=> {
+        if (event.code == 'Enter') {
+            doAction()
+        }
+    }
+
+    let total = 0
+    return (
+        <div>
+            <h1 className="bg-primary text-white p-2">React sample</h1>
+            <div className="container">
+            <h2 className="my-3">click button!</h2>
+            <div className="alert alert-primary">
+                <div className="row px-2">
+                    <input type="number" className="col"
+                        onChange={doChange} onKeyPress={doType} value={val} />
+                    <button onClick={doAction} className="btn btn-primary col-2">
+                        Click
+                    </button>
+                </div>
+            </div>
+            <table className="table">
+                <thead><tr><th>value</th><th>total</th></tr></thead>
+                <tbody>
+                {data.map((v,k)=>{
+                    total += v
+                    return <tr key={k}><td>{v}</td><td>{total}</td></tr>
+                })}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    )
+}
+
+export default App
+
+
+
+
+▼リスト6-15
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        ……略……
+    </head>
+    <body>
+        <noscript>
+            ……略……
+        </noscript>
+        <div id="app"></div>
+    </body>
+</html>
+
+
+
+
+▼リスト6-16
+import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+
+
+
+
+▼リスト6-17
+<template>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+</template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import HelloWorld from './components/HelloWorld.vue';
+
+@Options({
+    components: {
+        HelloWorld,
+    },
+})
+export default class App extends Vue {}
+</script>
+
+<style>
+……略……
+</style>
+
+
+
+
+▼リスト6-18
+<template>
+    <div class="hello">
+        <h1>{{ msg }}</h1>
+        ……略……
+    </div>
+</template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+
+@Options({
+    props: {
+        msg: String
+    }
+})
+export default class HelloWorld extends Vue {
+    msg!: string
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+……略……
+</style>
+
+
+
+
+▼リスト6-19
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" crossorigin="anonymous">
+
+
+
+
+▼リスト6-20
+<template>
+    <HelloWorld />
+</template>
+
+
+
+
+▼リスト6-21
+<template>
+    <h1 class="bg-info text-white p-2">{{msg}}</h1>
+    <div class="container">
+        <h2 class="my-3">number counter.</h2>
+        <div class="alert alert-info">
+            <h3 v-on:click="doAction">{{val}} count.</h3>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { Vue } from 'vue-class-component'
+
+export default class HelloWorld extends Vue {
+    msg = "Vue sample."
+    val = 1
+
+    doAction():void {
+        this.val += 1
+    }
+}
+</script>
+
+
+
+
+▼リスト6-22
+<script lang="tsx">
+import { VNode } from 'vue'
+import { Vue } from 'vue-class-component'
+
+export default class HelloWorld extends Vue {
+    msg = "Vue sample."
+    val = 1
+
+    doAction():void {
+        this.val += 1
+    }
+
+    render():VNode {
+        return(<div>
+            <h1 class="bg-info text-white p-2">{this.msg}</h1>
+            <div class="container">
+                <h2 class="my-3">number counter.</h2>
+                <div class="alert alert-info">
+                    <h3 onClick={this.doAction}>{this.val} count.</h3>
+                </div>
+            </div>
+        </div>)
+    }
+}
+</script>
+
+
+
+
+▼リスト6-23
+<script lang="tsx">
+import { VNode } from 'vue'
+import { Vue } from 'vue-class-component'
+
+export default class HelloWorld extends Vue {
+    msg = "Vue sample."
+    val = 1
+
+    doAction():void {
+        this.val += 1
+    }
+
+    get sum():number {
+        let re = 0
+        for (let i = 1;i <= this.val;i++)
+            re += i
+        return re
+    }
+
+    render():VNode {
+        return(<div>
+            <h1 class="bg-info text-white p-2">{this.msg}</h1>
+            <div class="container">
+                <h2 class="my-3">number counter.</h2>
+                <div class="alert alert-info">
+                    <h3 onClick={this.doAction}>{this.val} count.</h3>
+                    <h4>(sum: {this.sum})</h4>
+                </div>
+            </div>
+        </div>)
+    }
+}
+</script>
+
+
+
+
+▼リスト6-24
+<script lang="tsx">
+import { VNode } from 'vue'
+import { Vue } from 'vue-class-component'
+
+export default class HelloWorld extends Vue {
+    msg = 'Calc app'
+    val = 0
+    inputdata = new Array<number>()
+
+    doChange(event:Event):void {
+        const ob = event.target as HTMLInputElement
+        const re = Number(ob.value)
+        this.val = re
+    }
+
+    doAction():void {
+        this.doCalc()
+    }
+
+    doCalc():void {
+        const arr:number[] = []
+        for (let item of this.inputdata)
+            arr.push(item)
+        arr.push(this.val)
+        this.inputdata = arr
+        this.val = 0
+    }
+
+    doType(event:KeyboardEvent):void {
+        if (event.code == 'Enter') {
+            const ob = event.target as HTMLInputElement
+            const re = Number(ob.value)
+            this.val = re
+            this.doCalc()
+        }
+    }
+
+    render():VNode {
+        let total = 0
+        return(<div>
+            <h1 class="bg-info text-white p-2">{this.msg}</h1>
+            <div class="container">
+            <h2 class="my-3">click button or enter key!</h2>
+            <div class="alert alert-info">
+                <div class="row px-2">
+                    <input type="number" class="col"
+                        onChange={this.doChange} onKeypress={this.doType} value={this.val} />
+                    <button onClick={this.doAction} class="btn btn-info col-2">
+                        Click
+                    </button>
+                </div>
+            </div>
+            <table class="table">
+                <thead><tr><th>value</th><th>total</th></tr></thead>
+                <tbody>
+                {this.inputdata.map((v,k)=>{
+                    total += v
+                    return <tr key={k}><td>{v}</td><td>{total}</td></tr>
+                })}
+                </tbody>
+            </table>
+            </div>
+        </div>)
+    }
+}
+</script>
+
+
+
+
+■7章
+----------------------------------------
+▼リスト7-1
+// エラー処理のオブジェクト
+var createError = require('http-errors');
+// Express本体
+var express = require('express');
+// パスを管理するオブジェクト
+var path = require('path');
+// クッキーを扱うオブジェクト
+var cookieParser = require('cookie-parser');
+// ログ出力のオブジェクト
+var logger = require('morgan');
+
+
+
+
+▼リスト7-2
+var app = express();
+
+// ビューのパスとエンジンの設定
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// 必要な機能を組み込む
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+▼リスト7-3
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+
+
+
+▼リスト7-4
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
+
+
+
+
+▼リスト7-5
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+});
+
+module.exports = router;
+
+
+
+
+▼リスト7-6
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+    </body>
+</html>
+
+
+
+
+▼リスト7-7
+import { Request, Response, Router } from 'express'
+
+const router:Router = Router()
+
+router.get('/', function(req:Request, 
+            res:Response):void {
+    res.render('hello', {
+        header:'Hello page',
+        title: 'Hello!!' ,
+        msg:'This is Hello page!'
+    })
+})
+
+export default router
+
+
+
+
+▼リスト7-8
+import helloRouter from './routes/hello'
+
+app.set('view engine', 'ejs')
+app.use('/hello', helloRouter)
+
+
+
+
+▼リスト7-9
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+            rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="bg-primary text-white p-2"><%= header %></h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= title %></h2>
+        <div class="alert alert-primary">
+            <%= msg %>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+▼リスト7-10
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    await app.listen(3000);
+}
+bootstrap();
+
+
+
+
+▼リスト7-11
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+@Module({
+    imports: [],
+    controllers: [AppController],
+    providers: [AppService],
+})
+export class AppModule {}
+
+
+
+
+▼リスト7-12
+import { Controller, Get } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+    constructor(private readonly appService: AppService) {}
+
+    @Get()
+    getHello(): string {
+        return this.appService.getHello();
+    }
+}
+
+
+
+
+▼リスト7-13
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+    getHello(): string {
+        return 'Hello World!';
+    }
+}
+
+
+
+
+▼リスト7-14
+{
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "src",
+    "compilerOptions": {
+        "assets": ["**/*.ejs"]
+    }
+}
+
+
+
+
+▼リスト7-15
+import { NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { AppModule } from './app.module'
+import { join } from 'path'
+
+async function bootstrap() {
+    const app = await NestFactory.create<NestExpressApplication>(
+        AppModule,
+    )
+    
+    app.useStaticAssets(join(__dirname, '..', 'public'))
+    app.setBaseViewsDir(join(__dirname, '..', 'views'))
+    app.setViewEngine('ejs')
+
+    await app.listen(3000)
+}
+bootstrap()
+
+
+
+
+▼リスト7-16
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+            rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="bg-info text-white p-2"><%= header %></h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= title %></h2>
+        <div class="alert alert-info">
+            <%= message %>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+▼リスト7-17
+import { Controller, Get, Render } from '@nestjs/common'
+import { AppService } from './app.service'
+
+@Controller()
+export class AppController {
+    constructor(private readonly appService: AppService) {}
+
+    @Get()
+    @Render('index')
+    root() {
+        return {
+                title: 'Nest sample app',
+                header: 'Nest.js',
+                message: 'Hello world!'
+        }
+    }
+}
+
+
+
+
+▼リスト7-18
+<body>
+    <h1 class="bg-info text-white p-2"><%= title %></h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= msg %></h2>
+        <div class="alert alert-info">
+            <form method="post" action="/">
+                <div class="mb-2">
+                    <label>ID:</label>
+                    <input type="text" name="id" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label>password:</label>
+                    <input type="password" name="pass" class="form-control">
+                </div>
+                <div>
+                    <input type="submit" value="送信" class="btn btn-info">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+
+
+▼リスト7-19
+import { Controller, Get, Post, Body, Render } from '@nestjs/common'
+import { AppService } from './app.service'
+
+@Controller()
+export class AppController {
+    constructor(private readonly appService: AppService) {}
+
+    @Get('/')
+    @Render('index')
+    root() {
+        return {
+            title: 'Nest app',
+            msg: 'send form:'
+        }
+    }
+
+    @Post('/')
+    @Render('index')
+    send(@Body() form:any) {
+        return {
+            title: 'Nest form',
+            msg: JSON.stringify(form)
+        }
+    }
+}
+
+
+
+
+▼リスト7-20
+@Post('/')
+send(@Body() form:any) {
+    return form
+}
+
+
+
+
+▼リスト7-21
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+            rel="stylesheet" crossorigin="anonymous">
+    <script src="index.js"></script>
+</head>
+<body>
+    <h1 class="bg-info text-white p-2"><%= title %></h1>
+    <div class="container py-2">
+        <h2 class="mb-3" id="msg"><%= msg %></h2>
+        <div class="alert alert-info">
+            <div class="mb-2">
+                <label>ID:</label>
+                <input type="text" id="id" class="form-control">
+            </div>
+            <div class="mb-2">
+                <label>password:</label>
+                <input type="password" id="pass" class="form-control">
+            </div>
+            <div>
+                <button class="btn btn-info" onclick="doAction()">送信</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+▼リスト7-22
+async function getData(url:string, obj:object) {
+        const response = await fetch(url, {
+            method:'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+        const result = await response.json()
+        const msg_node:Element = document.querySelector('#msg')
+        msg_node.textContent = JSON.stringify(result)
+}
+
+const url = '/'
+
+function doAction():void {
+        const id_node:HTMLInputElement = document.querySelector('#id')
+        const pass_node:HTMLInputElement = document.querySelector('#pass')
+        const obj = {
+                id:id_node.value,
+                pass:pass_node.value
+            }
+        getData(url, obj)
+}
+
+
+
+
+▼リスト7-23
+{
+    "type": "sqlite",
+    "database": "data/database.sqlite3",
+    "entities": [
+        "dist/entities/**/*.entity.js"
+    ],
+    "migrations": [
+        "dist/migrations/**/*.js"
+    ]
+}
+
+
+
+
+▼リスト7-24
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm'; // ☆
+
+@Module({
+    imports: [TypeOrmModule.forRoot()], // ☆
+    controllers: [AppController],
+    providers: [AppService],
+})
+export class AppModule { }
+
+
+
+
+▼リスト7-25
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class Mydata {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column({ length: 20 })
+    name: string
+
+    @Column({ length: 100 })
+    pass: string
+
+    @Column({ length: 100, nullable:true })
+    mail: string
+
+    @Column()
+    age: number
+}
+
+
+
+
+▼リスト7-26
+import { Module } from '@nestjs/common'
+import { MydataService } from './mydata.service'
+import { MydataController } from './mydata.controller'
+
+import { Mydata } from '../entities/mydata.entity'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
+@Module({
+    imports: [TypeOrmModule.forFeature([Mydata])],
+    providers: [MydataService],
+    controllers: [MydataController]
+})
+export class MydataModule {}
+
+
+
+
+▼リスト7-27
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm'; // ☆
+import { MydataModule } from './mydata/mydata.module';
+
+@Module({
+    imports: [TypeOrmModule.forRoot(), MydataModule], // ☆
+    controllers: [AppController],
+    providers: [AppService],
+})
+export class AppModule { }
+
+
+
+
+▼リスト7-28
+import { Injectable } from '@nestjs/common';
+
+import { Repository } from 'typeorm'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Mydata } from '../entities/mydata.entity'
+
+@Injectable()
+export class MydataService {
+    constructor(
+        @InjectRepository(Mydata)
+        private readonly mydataRepository: Repository<Mydata> 
+    ) {}
+
+    getAll():Promise<Mydata[]> {
+        return this.mydataRepository.find()
+    }
+}
+
+
+
+
+▼リスト7-29
+import { Controller, Get } from '@nestjs/common'
+import { MydataService } from './mydata.service'
+
+@Controller('mydata')
+export class MydataController {
+    constructor(private readonly mydataService: MydataService) {}
+    
+    @Get('/')
+    root():Promise<any[]> {
+        return this.mydataService.getAll()
+    }
+}
+
+
+
+
+▼リスト7-30
+addMydata(data:any):Promise<InsertResult> {
+    return this.mydataRepository.insert(data)
+}
+
+
+
+
+▼リスト7-31
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" 
+            rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="bg-info text-white p-2"><%= title %></h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= msg %></h2>
+        <div class="alert alert-info">
+            <form method="post" action="/mydata/">
+                <div class="mb-2">
+                    <label>name:</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label>password:</label>
+                    <input type="password" name="pass" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label>mail:</label>
+                    <input type="email" name="mail" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label>age:</label>
+                    <input type="number" name="age" class="form-control">
+                </div>
+                <div>
+                    <input type="submit" value="送信" class="btn btn-info">
+                </div>
+            </form>
+        </div>
+        <table class="table my-4">
+            <thead><tr>
+                <th>id</th>
+                <th>name</th>
+                <th>mail</th>
+                <th>age</th>
+            </tr></thead>
+            <tbody>
+                <% for(let i in data){ 
+                    let item = data[i] %>
+                    <tr>
+                        <td><%= item.id %></td>
+                        <td><%= item.name %></td>
+                        <td><%= item.mail %></td>
+                        <td><%= item.age %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+▼リスト7-32
+import { Controller, Render, Get, Post, Redirect, Body }
+        from '@nestjs/common'
+import { MydataService } from './mydata.service'
+
+@Controller('mydata')
+export class MydataController {
+    constructor(private readonly mydataService: MydataService) {}
+    
+    @Get('/')
+    @Render('mydata/index')
+    async index():Promise<any> {
+        return {
+            title: 'SQLite app',
+            msg: 'mydata controller:',
+            data: await this.mydataService.getAll()
+        }
+    }
+
+    @Post('/')
+    @Redirect('/mydata/')
+    async send(@Body() form:any):Promise<void> {
+        await this.mydataService.addMydata(form)
+    }
+}
+
+
+
+
+▼リスト7-33
+import { NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express'
+import { AppModule } from './app.module'
+import { join } from 'path'
+import * as session from 'express-session' // ☆追記
+
+async function bootstrap() {
+    const app = await NestFactory.create<NestExpressApplication>(
+        AppModule
+    )
+
+    app.useStaticAssets(join(__dirname, '..', 'public'))
+    app.setBaseViewsDir(join(__dirname, '..', 'views'))
+    app.setViewEngine('ejs')
+    
+    // ☆追記した部分
+    app.use(
+        session({
+            secret: 'secret-value-is-here', // ※秘密鍵
+            resave: false,
+            saveUninitialized: false,
+        }),
+    )
+
+    await app.listen(3000)
+}
+bootstrap()
+
+
+
+
+▼リスト7-34
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import { Mydata } from './mydata.entity'
+
+@Entity()
+export class Board {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column({ length: 255 })
+    message: string
+
+    @Column('datetime')
+    date: Date
+
+    @ManyToOne(type => Mydata, mydata => mydata.boards, {
+        eager: true
+    })
+    mydata: Mydata
+}
+
+
+
+
+▼リスト7-35
+import { Module } from '@nestjs/common'
+import { BoardService } from './board.service'
+import { BoardController } from './board.controller'
+import { Board } from '../entities/board.entity'
+import { Mydata } from '../entities/mydata.entity'
+import { MydataService } from '../mydata/mydata.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
+@Module({
+    imports: [TypeOrmModule.forFeature([Board, Mydata])],
+    providers: [BoardService, MydataService],
+    controllers: [BoardController]
+})
+export class BoardModule {}
+
+
+
+
+▼リスト7-36
+import { Injectable } from '@nestjs/common';
+import { InsertResult, Repository } from 'typeorm'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Board } from '../entities/board.entity'
+
+@Injectable()
+export class BoardService {
+    constructor(
+        @InjectRepository(Board)
+        private readonly boardRepository: Repository<Board> 
+    ) {}
+
+    getAll():Promise<Board[]> {
+        return this.boardRepository.find({
+            order: {
+                date: "DESC"
+            },
+            take:20 // ☆最大数
+    })
+    }
+    
+    getById(id:number):Promise<Board> {
+        return this.boardRepository.findOne(id)
+    }
+
+    addBoard(form:any):Promise<InsertResult> {
+        return this.boardRepository.insert(form)
+    }
+}
+
+
+
+
+▼リスト7-37
+getByName(name:string):Promise<Mydata> {
+    return this.mydataRepository.findOne({name:name})
+}
+
+
+
+
+▼リスト7-38
+import { Controller, Get, Post, Body, Render, Req, 
+        Res, Session, Redirect } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { Any, InsertResult } from 'typeorm';
+import { BoardService } from './board.service'
+import { MydataService } from '../mydata/mydata.service'
+import { Mydata } from '../entities/mydata.entity'
+
+@Controller('board')
+export class BoardController {
+    constructor(private readonly boardService: BoardService,
+            private readonly mydataService: MydataService) {}
+
+    @Get('/')
+    async index(@Session() session: Record<string, any>,
+        @Res() response:Response):Promise<any> {
+        if (session.login === undefined) {
+            return response.redirect('/board/login')
+        }
+        return response.render('board/index',
+            {
+                msg: 'please send a message!',
+                login: session.login,
+                data: await this.boardService.getAll()
+            })
+    }
+
+    @Post('/')
+    @Redirect('/board/')
+    async send(@Body() form:any):Promise<void> {
+        form.date = new Date()
+        this.boardService.addBoard(form)
+    }
+
+    @Get('/login')
+    @Render('board/login')
+    login(@Session() session: Record<string, any>):any {
+        return {
+            msg: 'your name & password:',
+            login:session.login
+        }
+    }
+
+    @Post('/login')
+    async sign(@Body() form:any,
+            @Session() session: Record<string, any>,
+            @Res() response:Response):Promise<void> {
+        const mydata:Mydata = await this.mydataService.getByName(form.name)
+        if (mydata != undefined && form.pass === mydata.pass) {
+            session.login = mydata
+            return response.redirect('/board/')
+        }
+        return response.redirect('/board/login')
+    }
+}
+
+
+
+
+▼リスト7-39
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="bg-info text-white p-2">Login page</h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= msg %></h2>
+        <div class="alert alert-info">
+            <form method="post" action="/board/login">
+                <div class="mb-2">
+                    <label>name:</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <label>password:</label>
+                    <input type="password" name="pass" class="form-control">
+                </div>
+                <div>
+                    <input type="submit" value="送信" class="btn btn-info">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+▼リスト7-40
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title>Board</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="bg-info text-white p-2">Board page</h1>
+    <div class="container py-2">
+        <h2 class="mb-3"><%= msg %></h2>
+        <div class="alert alert-info">
+            <form method="post" action="/board/">
+                <div class="mb-2">
+                    <label>login user:</label>
+                    <h6><%= login.name + '(' + login.mail + ')' %></h6>
+                    <input type="hidden" name="mydata" value="<%= login.id %>">
+                </div>
+                <div class="mb-2">
+                    <label>message:</label>
+                    <input type="text" name="message" class="form-control">
+                </div>
+                <div>
+                    <input type="submit" value="送信" class="btn btn-info">
+                </div>
+            </form>
+        </div>
+        <table class="table my-4">
+            <thead><tr>
+                <th>message</th>
+                <th>name</th>
+            </tr></thead>
+            <tbody>
+                <% for(let i in data){ 
+                    let item = data[i] %>
+                    <tr>
+                        <td class="py-2"><%= item.message %><br>
+                        (<%= new Date(item.date).toLocaleString() %>)</td>
+                        <td><%= item.mydata.name %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+----------------------------------------
