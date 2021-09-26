@@ -1,10 +1,7 @@
 FROM node:16-alpine3.12
 
 WORKDIR /home/node
-RUN npm install typescript -g \
-    && npm init -y \
-    && npm install typescript @types/node --save-dev \
-    && tsc --init \
-    && npm install webpack ts-loader @webpack-cli/generators
+COPY ./docker-entrypoint.sh /usr/local/bin/
+RUN npm install typescript -g
 
-ENTRYPOINT [ "sleep", "infinity" ]
+ENTRYPOINT [ "docker-entrypoint.sh" ]
